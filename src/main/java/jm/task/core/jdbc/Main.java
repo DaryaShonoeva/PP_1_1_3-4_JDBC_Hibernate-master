@@ -9,16 +9,21 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) throws SQLException {
         Util con = new Util();
-        System.out.println(con.getNewConnection());
+        con.getNewConnection();
         UserDaoJDBCImpl user = new UserDaoJDBCImpl();
 
         user.createUsersTable();
         user.saveUser("dasha", "shon", (byte) 22);
+        System.out.println("User c именем dasha дообавлен в базу данных");
+        user.saveUser("masha", "shon", (byte) 23);
+        System.out.println("User c именем masha дообавлен в базу данных");
+        user.saveUser("sasha", "shon", (byte) 24);
+        System.out.println("User c именем sasha дообавлен в базу данных");
         System.out.printf(user.getAllUsers().toString());
 
-        for(User us:user.getAllUsers()) {
-            System.out.println(us);
-        }
+        user.cleanUsersTable();
+
+        user.dropUsersTable();
 
 
 

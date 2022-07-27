@@ -10,8 +10,8 @@ import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
     private final int id = 0;
-    private Connection connection = Util.getNewConnection();
-    private Statement statement = connection.createStatement();
+    private final Connection connection = Util.getNewConnection();
+    private final Statement statement = connection.createStatement();
 
     public UserDaoJDBCImpl() throws SQLException {
 
@@ -70,7 +70,7 @@ public class UserDaoJDBCImpl implements UserDao {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM users.user_user");
             while (resultSet.next()) {
                 User user = new User();
-                user.setId(Long.valueOf(resultSet.getInt("id")));
+                user.setId(resultSet.getLong("id"));
                 user.setName(resultSet.getString("name"));
                 user.setLastName(resultSet.getString("lastName"));
                 user.setAge(resultSet.getByte("age"));
@@ -81,7 +81,7 @@ public class UserDaoJDBCImpl implements UserDao {
             }
 
         } catch (SQLException e) {
-            System.out.println("hhhh");
+            System.out.println("Unable to display table");
         }
         return list;
     }
@@ -91,7 +91,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try {
             statement.executeUpdate(sqlClean);
         } catch (SQLException e) {
-            System.out.println("sdjnsjdn");
+            System.out.println("Unable to drop table");
         }
 
     }
