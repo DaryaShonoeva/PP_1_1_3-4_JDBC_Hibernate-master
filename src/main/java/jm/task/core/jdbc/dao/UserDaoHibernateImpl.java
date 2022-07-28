@@ -23,7 +23,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = sessionFactory.openSession()) {
 
             transaction = session.beginTransaction();
-            session.createSQLQuery("create table if not exists USERS " + "(" +
+            session.createSQLQuery("create table if not exists Users " + "(" +
                     "id int not null AUTO_INCREMENT, " +
                     "name varchar(30) not null, " +
                     "lastname varchar(50) not null, " +
@@ -46,7 +46,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = sessionFactory.openSession()) {
 
             transaction = session.beginTransaction();
-            session.createSQLQuery("DROP TABLE users").executeUpdate();
+            session.createSQLQuery("drop table if exists USERS").executeUpdate();
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {
@@ -97,7 +97,7 @@ public class UserDaoHibernateImpl implements UserDao {
         List users = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            users = session.createQuery("from USERS").list();
+            users = session.createQuery("from User").list();
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {
@@ -112,8 +112,9 @@ public class UserDaoHibernateImpl implements UserDao {
     public void cleanUsersTable() {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
+
             transaction = session.beginTransaction();
-            session.clear();
+            session.createSQLQuery("TRUNCATE users").executeUpdate();
             transaction.commit();
         } catch (HibernateException e) {
             if (transaction != null) {

@@ -8,10 +8,17 @@ import jm.task.core.jdbc.util.Util;
 import java.sql.SQLException;
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
-        Util con = new Util();
-        con.getNewConnection();
-        UserDaoJDBCImpl user = new UserDaoJDBCImpl();
+    public static void main(String[] args) {
+        jdbc();
+        hibernate();
+    }
+    public static void jdbc() {
+        UserDaoJDBCImpl user = null;
+        try {
+            user = new UserDaoJDBCImpl();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         user.createUsersTable();
         user.saveUser("dasha", "shon", (byte) 22);
@@ -26,16 +33,22 @@ public class Main {
 
         user.dropUsersTable();
 
+    }
+    public static void hibernate() {
         UserDaoHibernateImpl userDaoHibernate = new UserDaoHibernateImpl();
-        userDaoHibernate.createUsersTable();
+        userDaoHibernate.cleanUsersTable();
+        userDaoHibernate.saveUser("dasha", "shon", (byte) 22);
+        System.out.println("User c именем dasha дообавлен в базу данных");
+        userDaoHibernate.saveUser("sasha", "shon", (byte) 23);
+        System.out.println("User c именем sasha дообавлен в базу данных");
+        userDaoHibernate.saveUser("masha", "shon", (byte) 24);
+        System.out.println("User c именем masha дообавлен в базу данных");
+
+        System.out.printf(userDaoHibernate.getAllUsers().toString());
+
+        userDaoHibernate.cleanUsersTable();
+        userDaoHibernate.dropUsersTable();
 
 
-
-
-
-
-
-
-        // реализуйте алгоритм здесь
     }
 }
