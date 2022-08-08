@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    private final int id = 0;
+   
 
     public UserDaoJDBCImpl() throws SQLException {
 
