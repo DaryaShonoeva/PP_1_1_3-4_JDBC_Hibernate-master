@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    UserDaoJDBC ud = new UserDaoJDBCImpl();
+    UserDao ud = new UserDaoJDBCImpl();
 
 
     public UserServiceImpl() throws SQLException {
